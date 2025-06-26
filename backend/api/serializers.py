@@ -11,9 +11,8 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self,validated_data):
         user = User.objects.create_user(**validated_data)
         return user
-
-class NoteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Note
-        fields = ["id", "title", "content", "created_at", "author"]
-        extra_kwargs = {"author": {"read_only": True}}
+    
+    def validate_username(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("This username is already taken.")
+        return value
