@@ -1,10 +1,11 @@
 import './css/App.css'
 import Home from './pages/Home'
 import Favorites from './pages/Favorites'
-import Recommender from './pages/Recommender'
 import NavBar from './components/NavBar'
 import { Routes, Route } from "react-router-dom"
 import { MovieProvider } from './contexts/MovieContext'
+import Login from "./pages/Login"
+import Register from "./pages/Register"
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<Favorites />} />
-          <Route path="/recommender" element={<Recommender />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </main>
     </MovieProvider>

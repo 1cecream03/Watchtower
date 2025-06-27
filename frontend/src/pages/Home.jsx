@@ -64,7 +64,12 @@ function Home() {
                     Search
                 </button>
             </form>
-
+            <button
+                onClick={() => navigate("/login")}
+                style={{ margin: "20px 0", padding: "10px 20px", cursor: "pointer" }}
+            >
+                Login
+            </button>
             <button
                 onClick={() => navigate("/recommender")}
                 style={{ margin: "20px 0", padding: "10px 20px", cursor: "pointer" }}
