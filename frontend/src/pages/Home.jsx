@@ -28,9 +28,22 @@ function Home() {
     //function called when dependency array changes
     //useEffect allow to add side effects to func/ compo and define when they run
 
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         e.preventDefault() //prevent default behaviour, clear
-        alert(searchQuery)
+        if (!searchQuery.trim()) return
+        if (loading) return
+
+        setLoading(true)
+        try {
+            const searchResults = await searchMovies(searchQuery)
+            setMovies(searchResults)
+            setError(null)
+        } catch (err) {
+            console.log(err)
+            setError("Failed to search movies")
+        } finally {
+            setLoading(false)
+        }
         setSearchQuery("")
     };
 
