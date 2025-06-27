@@ -1,4 +1,4 @@
-const OPENAI_API_KEY = "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"
+const OPENAI_API_KEY = //need figure out another way
 const OPENAI_BASE_URL = "https://api.openai.com/v1"
 
 export async function getChatGPTRecommendation(prompt) {
