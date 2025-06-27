@@ -1,0 +1,33 @@
+.recommender-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  font-family: sans-serif;
+}
+
+textarea {
+  width: 100%;
+  font-size: 1rem;
+  padding: 10px;
+  resize: vertical;
+}
+
+button {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.response-box {
+  margin-top: 20px;
+  background: #f4f4f4;
+  padding: 15px;
+  border-radius: 6px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}

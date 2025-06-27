@@ -2,12 +2,15 @@ import MovieCard from "../components/MovieCard"
 import { useState, useEffect } from "react"
 import { searchMovies, getPopularMovies } from "../services/api";
 import '../css/Home.css'
+import { useNavigate } from "react-router-dom"
 
 function Home() {
     const [searchQuery, setSearchQuery] = useState(""); //anytime we update the state, it will rerender and update based on state
     const [movies, setMovies] = useState([])
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         const loadPopularMovies = async () => {
@@ -61,6 +64,13 @@ function Home() {
                     Search
                 </button>
             </form>
+
+            <button
+                onClick={() => navigate("/recommender")}
+                style={{ margin: "20px 0", padding: "10px 20px", cursor: "pointer" }}
+            >
+                Go to Recommender
+            </button>
 
             {error && <div className="error-message">{error}</div>}
 
