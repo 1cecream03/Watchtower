@@ -2,14 +2,18 @@ import { useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import { useAuth } from "../contexts/AuthContext";
 import "../css/Form.css"
 import { Link } from "react-router-dom";
+import { useMovieContext } from "../contexts/MovieContext";
 
 function Form({ route, method }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
+  const { fetchFavorites } = useMovieContext();
   const [errorMessage, setErrorMessage] = useState("");
 
   const name = method === "login" ? "Login" : "Register";
@@ -17,6 +21,7 @@ function Form({ route, method }) {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
+    console.log("Logging in with:", username);
 
     try {
       const res = await api.post(route, { username, password })
@@ -26,6 +31,8 @@ function Form({ route, method }) {
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         console.log("Access token saved:", localStorage.getItem(ACCESS_TOKEN));
         localStorage.setItem("username", username);
+        login();
+        await fetchFavorites();
         navigate(`/`);  // redirect to user page here
       } else {
         navigate("/login")

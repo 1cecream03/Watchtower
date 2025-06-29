@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import api from "../api";  // your axios instance
+import api from "../api";
 
 const MovieContext = createContext();
 
@@ -7,19 +7,29 @@ export const useMovieContext = () => useContext(MovieContext);
 
 export const MovieProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true); // optional: to prevent flicker
 
-  // Load favorites from backend on mount
+  // Fetch favorites when token is present
   useEffect(() => {
+    const token = localStorage.getItem("ACCESS_TOKEN");
+    if (!token) {
+      setFavorites([]); // clear if not logged in
+      return;
+    }
+
     const fetchFavorites = async () => {
       try {
         const res = await api.get("/api/favorites/");
-        setFavorites(res.data);
+        setFavorites(res.data); // only the logged-in user's favorites
       } catch (error) {
         console.error("Failed to load favorites:", error);
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchFavorites();
-  }, []);
+  }, []); // runs once on load
 
   const addToFavorites = async (movie) => {
     try {
@@ -37,7 +47,6 @@ export const MovieProvider = ({ children }) => {
 
   const removeFromFavorites = async (movieId) => {
     try {
-      // Find the favorite id in your state first
       const favorite = favorites.find((fav) => fav.movie_id === movieId);
       if (!favorite) return;
 
@@ -52,11 +61,28 @@ export const MovieProvider = ({ children }) => {
     return favorites.some((fav) => fav.movie_id === movieId);
   };
 
+  const clearFavorites = () => {
+    setFavorites([]);
+  };
+
+  const fetchFavorites = async () => {
+    try {
+      const res = await api.get("/api/favorites/");
+      setFavorites(res.data);
+    } catch (error) {
+      console.error("Failed to load favorites:", error);
+    }
+  };
+
+
   const value = {
     favorites,
     addToFavorites,
     removeFromFavorites,
     isFavorite,
+    clearFavorites,
+    fetchFavorites,
+    loading,
   };
 
   return <MovieContext.Provider value={value}>{children}</MovieContext.Provider>;
