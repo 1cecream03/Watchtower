@@ -26,18 +26,21 @@ Note: Make sure your virtual environment is activated before installing.
 In one terminal, navigate to the backend folder (if not already):
 run: cd backend
 
-Run the backend server:
+6) Run the backend server:
+   
 run: python manage.py runserver
 
-6) In the second terminal, navigate to the frontend folder:
+7) In the second terminal, navigate to the frontend folder:
+   
 run: cd frontend
 
-7) Install the frontend dependencies:
+8) Install the frontend dependencies:
+   
 run: npm install axios react-router-dom jwt-decode react react-dom
 
 Note: Make sure Node.js is installed. After installing Node.js, you may need to restart your code editor for the terminal to recognize the npm command.
 
-8) Run the frontend server:
+9) Run the frontend server:
    
 run: npm run dev
 
