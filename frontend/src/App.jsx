@@ -11,6 +11,7 @@ import MovieDetail from "./pages/MovieDetail"
 import ProtectedRoute from './components/ProtectedRoute'  
 import ReviewPage from "./pages/ReviewPage"
 import ReviewList from "./pages/ReviewList"
+import Recommendation from './pages/Recommender'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Home />} />
+            <Route path="/recommendations" element={<Recommendation />} />
             <Route
               path="/favorites"
               element={
