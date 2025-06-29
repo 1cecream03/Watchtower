@@ -18,7 +18,22 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
+
+  const logout = () => {
+    // Clear tokens
+    localStorage.removeItem("ACCESS_TOKEN");
+    localStorage.removeItem("REFRESH_TOKEN");
+
+    // Clear any cached movie data or reviews
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith("movie-")) {
+        localStorage.removeItem(key);
+      }
+    });
+
+    // Set login state
+    setIsLoggedIn(false);
+  };
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>

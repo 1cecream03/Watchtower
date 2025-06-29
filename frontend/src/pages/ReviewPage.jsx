@@ -1,58 +1,58 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 
 function ReviewPage() {
   const { id } = useParams(); // TMDB movie ID from URL
-  const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(5);
   const [error, setError] = useState("");
 
-  const movie = JSON.parse(localStorage.getItem(`movie-${id}`)); // grab stored movie
-
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const res = await api.get("/api/reviews/");
-        setReviews(res.data.filter(r => r.movie_id === parseInt(id)));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchReviews();
-  }, [id]);
+  const movie = JSON.parse(localStorage.getItem(`movie-${id}`)); // Movie info saved in localStorage on click
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       await api.post("/api/reviews/", {
-        movie_id: id,
+        movie_id: parseInt(id),
         title: movie.title,
         poster_path: movie.poster_path,
         content,
         rating,
       });
+
       setContent("");
       setRating(5);
       setError("");
-      // Refresh
-      const res = await api.get("/api/reviews/");
-      setReviews(res.data.filter(r => r.movie_id === parseInt(id)));
+
+      navigate("/reviews");  // Redirect to list page after submission
     } catch (err) {
+      console.error("Submit error:", err.response?.data || err);
       setError("Login required to submit reviews.");
     }
   };
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <h2>Reviews for {movie?.title}</h2>
+    <div style={{ padding: "1rem", maxWidth: "600px", margin: "0 auto", textAlign: "center" }}>
+      {/* Movie Poster */}
+      {movie?.poster_path && (
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+          style={{ width: "200px", borderRadius: "12px", marginBottom: "1rem" }}
+        />
+      )}
 
-      <form onSubmit={handleSubmit}>
+      <h2>Write a Review for <em>{movie?.title}</em></h2>
+
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.5rem", textAlign: "left" }}>
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Write your review"
+          placeholder="Write your review..."
+          rows="4"
           required
         />
         <input
@@ -60,22 +60,11 @@ function ReviewPage() {
           value={rating}
           min="1"
           max="5"
-          onChange={(e) => setRating(e.target.value)}
+          onChange={(e) => setRating(parseInt(e.target.value))}
         />
         <button type="submit">Submit Review</button>
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
-
-      <hr />
-
-      <div>
-        {reviews.map((r) => (
-          <div key={r.id} style={{ marginBottom: "1rem", borderBottom: "1px solid #ccc" }}>
-            <p><strong>{r.username}</strong> rated it {r.rating}/5</p>
-            <p>{r.content}</p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

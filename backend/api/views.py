@@ -25,7 +25,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        return Review.objects.all()
+        if self.request.user.is_authenticated:
+            return Review.objects.filter(user=self.request.user).order_by('-created_at')
+        return Review.objects.none()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

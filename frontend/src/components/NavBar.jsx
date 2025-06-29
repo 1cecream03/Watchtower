@@ -29,7 +29,6 @@ function NavBar() {
       </div>
       <div className="navbar-links">
         <Link to="/reviews" className="nav-link">Reviews</Link>
-
         <Link to="/favorites" className="nav-link">Favorites</Link>
 
         {isLoggedIn ? (

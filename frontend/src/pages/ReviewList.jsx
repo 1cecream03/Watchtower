@@ -1,42 +1,70 @@
-import { useEffect, useState } from 'react';
-import api from '../api';
-import '../css/ReviewList.css'
+import { useEffect, useState } from "react";
+import api from "../api";
+import { useAuth } from "../contexts/AuthContext";
+import "../css/Home.css";
 
-function AllReviews() {
+function ReviewList() {
   const [reviews, setReviews] = useState([]);
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await api.get('/api/reviews/');
+        const res = await api.get("/api/reviews/");
         setReviews(res.data);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
+      } catch (err) {
+        console.error("Failed to load reviews:", err);
       }
     };
-    fetchReviews();
-  }, []);
+
+    if (isLoggedIn) {
+      fetchReviews();
+    } else {
+      setReviews([]);
+    }
+  }, [isLoggedIn]);
 
   return (
-    <div className="review-page">
-      <h1>All Movie Reviews</h1>
-      {reviews.length === 0 ? (
-        <p>No reviews yet.</p>
-      ) : (
-        <ul className="review-list">
-          {reviews.map((review, index) => (
-            <li key={index} className="review-card">
-              <h3>Movie ID: {review.movie_id}</h3>
-              <p><strong>User:</strong> {review.username}</p>
-              <p><strong>Rating:</strong> {review.rating}/5</p>
-              <p>{review.content}</p>
-              <p className="timestamp">{new Date(review.created_at).toLocaleString()}</p>
-            </li>
-          ))}
-        </ul>
+    <div className="home">
+      <h2 style={{ marginBottom: "1rem" }}>Your Reviews</h2>
+
+      <div className="movies-grid">
+        {reviews.map((review) => (
+          <div className="movie-card" key={review.id}>
+            <div className="movie-poster">
+              <img
+                src={`https://image.tmdb.org/t/p/w500${review.poster_path}`}
+                alt={review.title}
+              />
+            </div>
+            <div className="movie-info">
+              <h3>{review.title}</h3>
+              <div style={{ fontSize: "1rem", marginBottom: "0.5rem" }}>
+                {"⭐".repeat(review.rating)}
+              </div>
+              <p
+                style={{
+                  maxHeight: "4.5em",
+                  overflow: "hidden",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: "vertical",
+                }}
+              >
+                {review.content}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {reviews.length === 0 && (
+        <p style={{ textAlign: "center", marginTop: "2rem" }}>
+          You haven’t written any reviews yet.
+        </p>
       )}
     </div>
   );
 }
 
-export default AllReviews;
+export default ReviewList;
