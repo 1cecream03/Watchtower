@@ -20,11 +20,13 @@ function Form({ route, method }) {
 
     try {
       const res = await api.post(route, { username, password })
+      console.log("Login response:", res);
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+        console.log("Access token saved:", localStorage.getItem(ACCESS_TOKEN));
         localStorage.setItem("username", username);
-        navigate("/")
+        navigate(`/`);  // redirect to user page here
       } else {
         navigate("/login")
       }
