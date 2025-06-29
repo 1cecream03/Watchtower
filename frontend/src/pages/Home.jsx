@@ -1,53 +1,61 @@
 import MovieCard from "../components/MovieCard"
 import { useState, useEffect } from "react"
-import { searchMovies, getPopularMovies } from "../services/api";
+import { searchMovies, getPopularMovies } from "../services/movieapi";
 import '../css/Home.css'
 import { useNavigate } from "react-router-dom"
 
 function Home() {
-    const [searchQuery, setSearchQuery] = useState(""); //anytime we update the state, it will rerender and update based on state
-    const [movies, setMovies] = useState([])
-    const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const navigate = useNavigate()
-
+    const [searchQuery, setSearchQuery] = useState("");
+    const [movies, setMovies] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const loadPopularMovies = async () => {
-            try {
-                const popularMovies = await getPopularMovies()
-                setMovies(popularMovies)
-            } catch (err) {
-                console.log(err)
-                setError("Failed to load movies...")
-            }
-            finally {
-                setLoading(false)
-            }
-        }
+        loadPopularMovies(page);
+    }, [page]);
 
-        loadPopularMovies()
-    }, [])
-    //function called when dependency array changes
-    //useEffect allow to add side effects to func/ compo and define when they run
+    const loadPopularMovies = async (pageNumber) => {
+        setLoading(true);
+        try {
+            const newMovies = await getPopularMovies(pageNumber);
+            if (newMovies.length === 0) {
+                setHasMore(false);
+            } else {
+                setMovies((prev) => {
+                    const existingIds = new Set(prev.map((m) => m.id));
+                    const uniqueNewMovies = newMovies.filter((m) => !existingIds.has(m.id));
+                    return [...prev, ...uniqueNewMovies];
+                });
+            }
+        } catch (err) {
+            console.log(err);
+            setError("Failed to load movies...");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleSearch = async (e) => {
-        e.preventDefault() //prevent default behaviour, clear
-        if (!searchQuery.trim()) return
-        if (loading) return
+        e.preventDefault();
+        if (!searchQuery.trim()) return;
+        if (loading) return;
 
-        setLoading(true)
+        setLoading(true);
         try {
-            const searchResults = await searchMovies(searchQuery)
-            setMovies(searchResults)
-            setError(null)
+            const searchResults = await searchMovies(searchQuery);
+            setMovies(searchResults);
+            setError(null);
+            setHasMore(false); // hide Load More when searching
         } catch (err) {
-            console.log(err)
-            setError("Failed to search movies")
+            console.log(err);
+            setError("Failed to search movies");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-        setSearchQuery("")
+        setSearchQuery("");
     };
 
     return (
@@ -58,38 +66,35 @@ function Home() {
                     placeholder="Search for movies..."
                     className="search-input"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)} //??this is how u update the state
+                    onChange={(e) => setSearchQuery(e.target.value)}
                 />
                 <button type="submit" className="search-button">
                     Search
                 </button>
             </form>
-            <button
-                onClick={() => navigate("/login")}
-                style={{ margin: "20px 0", padding: "10px 20px", cursor: "pointer" }}
-            >
-                Login
-            </button>
-            <button
-                onClick={() => navigate("/recommender")}
-                style={{ margin: "20px 0", padding: "10px 20px", cursor: "pointer" }}
-            >
-                Go to Recommender
-            </button>
 
             {error && <div className="error-message">{error}</div>}
 
-            {loading ? (
-                <div className="loading">Loading...</div>
-            ) : (
-                <div className="movies-grid">
-                    {movies.map((movie) => (
-                        <MovieCard movie={movie} key={movie.id} /> //rerun entire component while state remains, return new UI
-                    ))}
+            <div className="movies-grid">
+                {movies.map((movie) => (
+                    <MovieCard movie={movie} key={movie.id} />
+                ))}
+            </div>
+
+            {hasMore && !loading && (
+                <div style={{ textAlign: "center", margin: "30px" }}>
+                    <button
+                        onClick={() => setPage((prev) => prev + 1)}
+                        className="load-more-button"
+                    >
+                        Load More
+                    </button>
                 </div>
             )}
+
+            {loading && <div className="loading">Loading...</div>}
         </div>
     );
 }
 
-export default Home
+export default Home;
