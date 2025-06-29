@@ -40,9 +40,11 @@ run: npm install axios react-router-dom jwt-decode
 Note: Make sure Node.js is installed. After installing Node.js, you may need to restart your code editor for the terminal to recognize the npm command.
 
 8) Run the frontend server:
+   
 run: npm run dev
 
-9) Access the app:
+10) Access the app:
+   
 Frontend: http://localhost:5173
 
 Backend: http://localhost:8000
