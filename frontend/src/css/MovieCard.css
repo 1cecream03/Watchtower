@@ -122,3 +122,36 @@
     font-size: 1.2rem;
   }
 }
+
+.login-popup {
+  position: fixed;
+  top: 60px; /* adjust if needed to sit nicely below the navbar */
+  right: 20px;
+  background: #1e1e1e; /* dark background */
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  z-index: 1000;
+  max-width: 250px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.popup-content .login-link {
+  color: #4ea9ff;
+  text-decoration: underline;
+  font-weight: 500;
+  align-self: flex-start;
+}
+
+.popup-content .login-link:hover {
+  color: #79c6ff;
+}
+
