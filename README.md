@@ -3,11 +3,13 @@
 Setup Guide
 
 1) Create a virtual environment for the backend. Ensure you have python installed on ur device.
+
 On MacOS, run: python3 -m venv env
 
 On Windows, run: python -m venv env
 
 2) Activate the virtual environment.
+   
 On MacOS, run: source env/bin/activate
 
 On Windows, run: env\Scripts\activate.bat
@@ -15,9 +17,11 @@ On Windows, run: env\Scripts\activate.bat
 Note: If you're using PowerShell and encounter an error, switch your terminal to Command Prompt.
 
 3) Navigate to the backend folder:
+   
 run: cd backend
 
-4) Install the backend requirements:
+5) Install the backend requirements:
+   
 run: pip install -r requirements.txt
 
 Note: Make sure your virtual environment is activated before installing.
@@ -31,21 +35,21 @@ run: cd backend
    
 run: python manage.py runserver
 
-7) In the second terminal, navigate to the frontend folder:
+8) In the second terminal, navigate to the frontend folder:
    
 run: cd frontend
 
-8) Install the frontend dependencies:
+9) Install the frontend dependencies:
    
 run: npm install axios react-router-dom jwt-decode react react-dom
 
 Note: Make sure Node.js is installed. After installing Node.js, you may need to restart your code editor for the terminal to recognize the npm command.
 
-9) Run the frontend server:
+10) Run the frontend server:
    
 run: npm run dev
 
-10) Access the app:
+11) Access the app:
    
 Frontend: http://localhost:5173
 
