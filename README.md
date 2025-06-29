@@ -1,7 +1,5 @@
 # Watchtower
 
-AM-Sentry
-
 Setup Guide
 
 1) Create a virtual environment for the backend. Ensure you have python installed on ur device.
