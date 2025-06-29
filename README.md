@@ -24,9 +24,10 @@ Note: Make sure your virtual environment is activated before installing.
 
 5) Open a new terminal window or split terminal into 2 panes.
 In one terminal, navigate to the backend folder (if not already):
+
 run: cd backend
 
-6) Run the backend server:
+7) Run the backend server:
    
 run: python manage.py runserver
 
