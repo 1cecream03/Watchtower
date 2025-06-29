@@ -50,4 +50,101 @@
 .cast-list {
   display: flex;
   gap: 20px;
-  flex-wrap: wrap
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cast-member {
+  width: 120px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.cast-image {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(100, 111, 255, 0.4);
+}
+
+.cast-no-image {
+  width: 100%;
+  height: 180px;
+  background-color: #3a3a55;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #b3aaff;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: inset 0 0 10px #6e69f7;
+}
+
+.cast-name {
+  margin-top: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.cast-character {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.trailer-section {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.trailer-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #8f7aec;
+}
+
+.trailer-link {
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(140, 110, 255, 0.5);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  max-width: 100%;
+}
+
+.trailer-link:hover {
+  transform: scale(1.05);
+}
+
+.trailer-thumbnail {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 8px;
+}
+
+/* Play icon overlay */
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  width: 60px;
+  height: 60px;
+  background: rgba(100, 111, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(100, 111, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-icon::before {
+  content: "";
+  display: inline-block;
+  margin-left: 5px;
+  border-style: solid;
+  border-width: 12px 0 12px 20px;
+  border-color: transparent transparent transparent white;
+}
