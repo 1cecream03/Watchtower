@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, FavoriteViewSet
+from api.views import CreateUserView, FavoriteViewSet, ReviewViewSet
 from django.conf import settings
 from django.conf.urls.static import static 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -9,6 +9,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'favorites', FavoriteViewSet, basename='favorite')
+router.register(r'reviews', ReviewViewSet, basename='review')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

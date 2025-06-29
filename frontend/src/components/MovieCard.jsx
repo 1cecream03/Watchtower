@@ -1,14 +1,15 @@
 import '../css/MovieCard.css';
 import { useMovieContext } from '../contexts/MovieContext';
-import { useAuth } from '../contexts/AuthContext';  
+import { useAuth } from '../contexts/AuthContext';
 import { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function MovieCard({ movie }) {
   const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
   const favorite = isFavorite(movie.id);
-  const { isLoggedIn } = useAuth();  
+  const { isLoggedIn } = useAuth();
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const navigate = useNavigate();
 
   const handleFavoriteClick = async (e) => {
     e.preventDefault();
@@ -25,6 +26,12 @@ function MovieCard({ movie }) {
     }
   };
 
+  const handleReviewClick = (e) => {
+    e.preventDefault();
+    localStorage.setItem(`movie-${movie.id}`, JSON.stringify(movie));
+    navigate(`/movie/${movie.id}/reviews`);
+  };
+
   return (
     <>
       <Link to={`/movie/${movie.id}`} className="movie-card-link" style={{ textDecoration: 'none' }}>
@@ -37,6 +44,9 @@ function MovieCard({ movie }) {
                 onClick={handleFavoriteClick}
               >
                 ❤︎
+              </button>
+              <button className="review-btn" onClick={handleReviewClick}>
+                🖍
               </button>
             </div>
           </div>

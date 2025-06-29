@@ -1,0 +1,23 @@
+.review-page {
+  padding: 2rem;
+  max-width: 700px;
+  margin: auto;
+}
+
+.review-list {
+  list-style: none;
+  padding: 0;
+}
+
+.review-card {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 5px rgba(255,255,255,0.05);
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  color: #888;
+}

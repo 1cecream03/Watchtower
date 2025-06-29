@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import Favorite
+from .models import Favorite, Review
 from rest_framework import serializers 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -22,3 +22,11 @@ class FavoriteSerializer(serializers.ModelSerializer):
          model = Favorite
          fields = ['id', 'movie_id', 'title', 'poster_path']
          read_only_fields = ['id']
+
+class ReviewSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+
+    class Meta:
+        model = Review
+        fields = ['id', 'username', 'movie_id', 'title', 'poster_path', 'content', 'rating', 'created_at']
+        read_only_fields = ['user']

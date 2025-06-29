@@ -8,7 +8,9 @@ import { AuthProvider } from './contexts/AuthContext'
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import MovieDetail from "./pages/MovieDetail"
-import ProtectedRoute from './components/ProtectedRoute'  // import your custom component\
+import ProtectedRoute from './components/ProtectedRoute'  
+import ReviewPage from "./pages/ReviewPage"
+import ReviewList from "./pages/ReviewList"
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
               }
             />
             <Route path="/movie/:id" element={<MovieDetail />} />
+            <Route path="/movie/:id/reviews" element={<ReviewPage />} />
+            <Route path="/reviews" element={<ReviewList />} />
           </Routes>
         </main>
       </MovieProvider>
