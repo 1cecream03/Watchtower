@@ -6,6 +6,8 @@ import { Routes, Route } from "react-router-dom"
 import { MovieProvider } from './contexts/MovieContext'
 import Login from "./pages/Login"
 import Register from "./pages/Register"
+import MovieDetail from "./pages/MovieDetail";
+
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/movie/:id" element={<MovieDetail />} />
         </Routes>
       </main>
     </MovieProvider>

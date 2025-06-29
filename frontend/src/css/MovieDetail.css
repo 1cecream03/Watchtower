@@ -1,0 +1,53 @@
+.movie-detail-container {
+  padding: 20px 15px;
+  max-width: 900px;
+  margin: auto;
+  color: rgba(255, 255, 255, 0.87);
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.movie-poster {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(100, 111, 255, 0.3);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.movie-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: #a48eff; /* purple accent */
+}
+
+.movie-overview {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.cast-section {
+  margin-bottom: 2.5rem;
+}
+
+.cast-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #8f7aec; /* softer purple */
+  text-align: center;
+}
+
+.cast-list {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap
