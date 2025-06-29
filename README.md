@@ -35,7 +35,7 @@ run: python manage.py runserver
 run: cd frontend
 
 7) Install the frontend dependencies:
-run: npm install axios react-router-dom jwt-decode
+run: npm install axios react-router-dom jwt-decode react react-dom
 
 Note: Make sure Node.js is installed. After installing Node.js, you may need to restart your code editor for the terminal to recognize the npm command.
 
