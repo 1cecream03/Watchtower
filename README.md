@@ -41,7 +41,7 @@ run: cd frontend
 
 8) Install the frontend dependencies:
    
-run: npm install axios react-router-dom jwt-decode react react-dom
+run: npm install 
 
 Note: Make sure Node.js is installed. After installing Node.js, you may need to restart your code editor for the terminal to recognize the npm command.
 
