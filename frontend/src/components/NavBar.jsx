@@ -1,22 +1,21 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { useMovieContext } from "../contexts/MovieContext";
+import { useMovieContext } from '../contexts/MovieContext';
 import '../css/Navbar.css';
 
 function NavBar() {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
-  const [loggingOut, setLoggingOut] = useState(false);
   const { clearFavorites } = useMovieContext();
-
+  const [loggingOut, setLoggingOut] = useState(false);
 
   const handleLogout = () => {
     setLoggingOut(true);
     setTimeout(() => {
       logout();
-      setLoggingOut(false);
       clearFavorites();
+      setLoggingOut(false);
       navigate('/');
       window.location.reload();
     }, 1000);
@@ -28,9 +27,12 @@ function NavBar() {
         <Link to="/">WatchTower</Link>
       </div>
       <div className="navbar-links">
-        <Link to="/reviews" className="nav-link">Reviews</Link>
-        <Link to="/favorites" className="nav-link">Favorites</Link>
-        
+        <Link to="/reviews" className="nav-link">
+          Reviews
+        </Link>
+        <Link to="/favorites" className="nav-link">
+          Favorites
+        </Link>
 
         {isLoggedIn ? (
           loggingOut ? (
@@ -41,7 +43,9 @@ function NavBar() {
             </button>
           )
         ) : (
-          <Link to="/login" className="nav-link">Login</Link>
+          <Link to="/login" className="nav-link">
+            Login
+          </Link>
         )}
       </div>
     </nav>

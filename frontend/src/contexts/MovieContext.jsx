@@ -41,7 +41,10 @@ export const MovieProvider = ({ children }) => {
       });
       setFavorites((prev) => [...prev, res.data]);
     } catch (error) {
-      console.error("Error adding to favorites:", error.response?.data || error.message);
+      console.error(
+        "Error adding to favorites:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -51,9 +54,14 @@ export const MovieProvider = ({ children }) => {
       if (!favorite) return;
 
       await api.delete(`/api/favorites/${favorite.id}/`);
-      setFavorites((prev) => prev.filter((fav) => fav.movie_id !== movieId));
+      setFavorites((prev) =>
+        prev.filter((fav) => fav.movie_id !== movieId)
+      );
     } catch (error) {
-      console.error("Error removing favorite:", error.response?.data || error.message);
+      console.error(
+        "Error removing favorite:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -74,7 +82,6 @@ export const MovieProvider = ({ children }) => {
     }
   };
 
-
   const value = {
     favorites,
     addToFavorites,
@@ -85,5 +92,9 @@ export const MovieProvider = ({ children }) => {
     loading,
   };
 
-  return <MovieContext.Provider value={value}>{children}</MovieContext.Provider>;
+  return (
+    <MovieContext.Provider value={value}>
+      {children}
+    </MovieContext.Provider>
+  );
 };

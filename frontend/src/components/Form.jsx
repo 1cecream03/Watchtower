@@ -1,41 +1,44 @@
 import { useState } from "react";
-import api from "../api";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import api from "../api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import { useAuth } from "../contexts/AuthContext";
-import "../css/Form.css"
-import { Link } from "react-router-dom";
 import { useMovieContext } from "../contexts/MovieContext";
+import "../css/Form.css";
 
 function Form({ route, method }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const navigate = useNavigate();
   const { login } = useAuth();
   const { fetchFavorites } = useMovieContext();
-  const [errorMessage, setErrorMessage] = useState("");
 
   const name = method === "login" ? "Login" : "Register";
 
   const handleSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
+    setLoading(true);
     console.log("Logging in with:", username);
 
     try {
-      const res = await api.post(route, { username, password })
+      const res = await api.post(route, { username, password });
       console.log("Login response:", res);
+
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-        console.log("Access token saved:", localStorage.getItem(ACCESS_TOKEN));
         localStorage.setItem("username", username);
+        console.log("Access token saved:", localStorage.getItem(ACCESS_TOKEN));
+
         login();
         await fetchFavorites();
-        navigate(`/`);  // redirect to user page here
+        navigate(`/`);
       } else {
-        navigate("/login")
+        navigate("/login");
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -51,7 +54,7 @@ function Form({ route, method }) {
         setErrorMessage("Network error. Please try again.");
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -76,9 +79,8 @@ function Form({ route, method }) {
         <button className="form-button" type="submit">
           {name}
         </button>
-        <p className="form-error">
-          {errorMessage || "\u00A0"}
-        </p>
+        <p className="form-error">{errorMessage || "\u00A0"}</p>
+
         {method === "register" && (
           <p className="form-footer-text">
             Already registered?{" "}
@@ -96,12 +98,16 @@ function Form({ route, method }) {
             </Link>
           </p>
         )}
+
         <div className="spinner-container">
-          <div className="spinner" style={{ visibility: loading ? 'visible' : 'hidden' }}></div>
+          <div
+            className="spinner"
+            style={{ visibility: loading ? "visible" : "hidden" }}
+          ></div>
         </div>
       </form>
     </div>
   );
 }
 
-export default Form
+export default Form;
