@@ -7,6 +7,5 @@ router.register(r'favorites', FavoriteViewSet, basename='favorite')
 router.register(r'reviews', ReviewViewSet, basename='review')
 
 urlpatterns = [
-    # your other urls
     path('api/', include(router.urls)),
 ]
