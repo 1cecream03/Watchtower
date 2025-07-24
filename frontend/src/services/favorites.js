@@ -1,4 +1,4 @@
-import api from '../api'; 
+import api from '../api';
 
 export const getFavorites = async () => {
   const response = await api.get('/favorites/');
@@ -14,3 +14,4 @@ export const removeFavorite = async (favoriteId) => {
   const response = await api.delete(`/favorites/${favoriteId}/`);
   return response.data;
 };
+

@@ -27,7 +27,7 @@ function ReviewPage() {
       setRating(5);
       setError("");
 
-      navigate("/reviews");  // Redirect to list page after submission
+      navigate("/reviews"); // Redirect to list page after submission
     } catch (err) {
       console.error("Submit error:", err.response?.data || err);
       setError("Login required to submit reviews.");
@@ -35,7 +35,14 @@ function ReviewPage() {
   };
 
   return (
-    <div style={{ padding: "1rem", maxWidth: "600px", margin: "0 auto", textAlign: "center" }}>
+    <div
+      style={{
+        padding: "1rem",
+        maxWidth: "600px",
+        margin: "0 auto",
+        textAlign: "center",
+      }}
+    >
       {/* Movie Poster */}
       {movie?.poster_path && (
         <img
@@ -45,9 +52,19 @@ function ReviewPage() {
         />
       )}
 
-      <h2>Write a Review for <em>{movie?.title}</em></h2>
+      <h2>
+        Write a Review for <em>{movie?.title}</em>
+      </h2>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.5rem", textAlign: "left" }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
+          textAlign: "left",
+        }}
+      >
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}

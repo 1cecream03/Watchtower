@@ -1,17 +1,17 @@
-import './css/App.css'
-import Home from './pages/Home'
-import Favorites from './pages/Favorites'
-import NavBar from './components/NavBar'
-import { Routes, Route } from "react-router-dom"
-import { MovieProvider } from './contexts/MovieContext'
-import { AuthProvider } from './contexts/AuthContext'
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import MovieDetail from "./pages/MovieDetail"
-import ProtectedRoute from './components/ProtectedRoute'  
-import ReviewPage from "./pages/ReviewPage"
-import ReviewList from "./pages/ReviewList"
-import Recommendation from './pages/Recommender'
+import './css/App.css';
+import Home from './pages/Home';
+import Favorites from './pages/Favorites';
+import NavBar from './components/NavBar';
+import { Routes, Route } from "react-router-dom";
+import { MovieProvider } from './contexts/MovieContext';
+import { AuthProvider } from './contexts/AuthContext';
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import MovieDetail from "./pages/MovieDetail";
+import ProtectedRoute from './components/ProtectedRoute';
+import ReviewPage from "./pages/ReviewPage";
+import ReviewList from "./pages/ReviewList";
+import Recommendation from './pages/Recommender';
 
 function App() {
   return (
@@ -39,7 +39,7 @@ function App() {
         </main>
       </MovieProvider>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;
