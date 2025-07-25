@@ -1,81 +1,85 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useMovieContext } from '../contexts/MovieContext';
-import { useAuth } from '../contexts/AuthContext';
-import '../css/MovieCard.css';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import api from "../api";
+import { useAuth } from "../contexts/AuthContext";
+import "../css/MovieCard.css";
 
 function MovieCard({ movie }) {
-  const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
-  const favorite = isFavorite(movie.id);
   const { isLoggedIn } = useAuth();
-  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
-  const navigate = useNavigate();
+  const [isFav, setIsFav] = useState(false);
+  const [favoriteId, setFavoriteId] = useState(null);
 
-  const handleFavoriteClick = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const checkFavorite = async () => {
+      if (!isLoggedIn) return;
 
+      try {
+        const res = await api.get("/api/favorites/");
+        const found = res.data.find((fav) => fav.movie_id === movie.id);
+        if (found) {
+          setIsFav(true);
+          setFavoriteId(found.id);
+        }
+      } catch (err) {
+        console.error("Failed to check favorite:", err);
+      }
+    };
+
+    checkFavorite();
+  }, [isLoggedIn, movie.id]);
+
+  const toggleFavorite = async () => {
     if (!isLoggedIn) {
-      setShowLoginPrompt(true);
+      alert("Please log in to favorite movies.");
       return;
     }
 
-    if (favorite) {
-      await removeFromFavorites(movie.id);
-    } else {
-      await addToFavorites(movie);
+    try {
+      if (isFav) {
+        await api.delete(`/api/favorites/${favoriteId}/`);
+        setIsFav(false);
+        setFavoriteId(null);
+      } else {
+        const res = await api.post("/api/favorites/", {
+          movie_id: movie.id,
+          title: movie.title,
+          poster_path: movie.poster_path,
+          release_date: movie.release_date,
+        });
+        setIsFav(true);
+        setFavoriteId(res.data.id);
+      }
+    } catch (err) {
+      console.error("Failed to toggle favorite:", err);
     }
   };
 
-  const handleReviewClick = (e) => {
-    e.preventDefault();
-    localStorage.setItem(`movie-${movie.id}`, JSON.stringify(movie));
-    navigate(`/movie/${movie.id}/reviews`);
-  };
-
   return (
-    <>
-      <Link
-        to={`/movie/${movie.id}`}
-        className="movie-card-link"
-        style={{ textDecoration: 'none' }}
-      >
-        <div className="movie-card">
-          <div className="movie-poster">
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-            />
-            <div className="movie-overlay">
-              <button
-                className={`favorite-btn ${favorite ? 'active' : ''}`}
-                onClick={handleFavoriteClick}
-              >
-                ❤︎
-              </button>
-              <button className="review-btn" onClick={handleReviewClick}>
-                🖍
-              </button>
-            </div>
-          </div>
-          <div className="movie-info">
-            <h3>{movie.title}</h3>
-            <p>{movie.release_date?.split('-')[0]}</p>
-          </div>
-        </div>
+    <div className="movie-card">
+      <Link to={`/movie/${movie.id}`}>
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+          className="movie-poster"
+        />
       </Link>
+      <div className="movie-details">
+        <Link to={`/movie/${movie.id}`} className="movie-title-link">
+          <h3>{movie.title}</h3>
+        </Link>
+        <p>{movie.release_date}</p>
 
-      {showLoginPrompt && (
-        <div className="login-popup">
-          <div className="popup-content">
-            <p>Please log in to add movies to your favorites.</p>
-            <button onClick={() => setShowLoginPrompt(false)}>Close</button>
-            <Link to="/login" className="login-link">
-              Go to Login
-            </Link>
-          </div>
+        <div className="movie-actions">
+          <button className="favorite-btn" onClick={toggleFavorite}>
+            {isFav ? "❤️" : "🤍"}
+          </button>
+
+          <Link to={`/movie/${movie.id}/reviews`} className="review-btn">
+            Review
+          </Link>
         </div>
-      )}
-    </>
+      </div>
+    </div>
   );
 }
 
