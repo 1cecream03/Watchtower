@@ -14,6 +14,7 @@ import ReviewList from "./pages/ReviewList";
 import Recommendation from './pages/Recommender';
 import GenrePage from './pages/GenrePage';
 
+
 function App() {
   return (
     <AuthProvider>

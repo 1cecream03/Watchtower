@@ -11,7 +11,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const navigate = useNavigate(); // Not used yet, but kept in case for future use
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadPopularMovies(page);
@@ -48,7 +48,7 @@ function Home() {
       const searchResults = await searchMovies(searchQuery);
       setMovies(searchResults);
       setError(null);
-      setHasMore(false); // Hide "Load More" on search
+      setHasMore(false);
     } catch (err) {
       console.error(err);
       setError("Failed to search movies");
@@ -60,18 +60,21 @@ function Home() {
 
   return (
     <div className="home">
-      <form onSubmit={handleSearch} className="search-form">
-        <input
-          type="text"
-          placeholder="Search for movies..."
-          className="search-input"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <button type="submit" className="search-button">
-          Search
-        </button>
-      </form>
+      <div className="top-bar">
+        <h2 className="section-heading">What’s Trending</h2>
+        <form onSubmit={handleSearch} className="search-form">
+          <input
+            type="text"
+            placeholder="Search for movies..."
+            className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button type="submit" className="search-button">
+            Search
+          </button>
+        </form>
+      </div>
 
       {error && <div className="error-message">{error}</div>}
 
