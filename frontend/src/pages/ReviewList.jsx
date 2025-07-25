@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 import { useAuth } from "../contexts/AuthContext";
-import "../css/Home.css";
+import "../css/ReviewList.css";
 
 function ReviewList() {
   const [reviews, setReviews] = useState([]);
@@ -24,13 +24,23 @@ function ReviewList() {
     }
   }, [isLoggedIn]);
 
-  return (
-    <div className="home">
-      <h2 style={{ marginBottom: "1rem" }}>Your Reviews</h2>
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`/api/reviews/${id}/`);
+      setReviews((prev) => prev.filter((review) => review.id !== id));
+    } catch (err) {
+      console.error("Failed to delete review:", err);
+      alert("Failed to delete review.");
+    }
+  };
 
-      <div className="movies-grid">
+  return (
+    <div className="reviewlist-page">
+      <h2>Your Reviews</h2>
+
+      <div className="reviews-grid">
         {reviews.map((review) => (
-          <div className="movie-card" key={review.id}>
+          <div className="review-card" key={review.id}>
             <div className="movie-poster">
               <img
                 src={`https://image.tmdb.org/t/p/w500${review.poster_path}`}
@@ -39,20 +49,14 @@ function ReviewList() {
             </div>
             <div className="movie-info">
               <h3>{review.title}</h3>
-              <div style={{ fontSize: "1rem", marginBottom: "0.5rem" }}>
-                {"⭐".repeat(review.rating)}
-              </div>
-              <p
-                style={{
-                  maxHeight: "4.5em",
-                  overflow: "hidden",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 3,
-                  WebkitBoxOrient: "vertical",
-                }}
+              <div className="stars">{"⭐".repeat(review.rating)}</div>
+              <p className="review-text">{review.content}</p>
+              <button
+                className="delete-btn"
+                onClick={() => handleDelete(review.id)}
               >
-                {review.content}
-              </p>
+                🗑️
+              </button>
             </div>
           </div>
         ))}

@@ -1,23 +1,88 @@
-.review-page {
-  padding: 2rem;
-  max-width: 700px;
-  margin: auto;
+.reviewlist-page {
+  padding: 2rem 1rem;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.review-list {
-  list-style: none;
-  padding: 0;
+.reviewlist-page h2 {
+  margin-bottom: 2rem; /* Increased spacing from header to cards */
+  color: #fff;
+}
+
+.reviews-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem; /* Increased spacing between cards */
 }
 
 .review-card {
   background: #1e1e1e;
-  padding: 1rem;
   border-radius: 10px;
-  margin-bottom: 1rem;
-  box-shadow: 0 0 5px rgba(255,255,255,0.05);
+  width: 280px;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+  position: relative;
 }
 
-.timestamp {
-  font-size: 0.8rem;
-  color: #888;
+.review-card:hover {
+  transform: translateY(-4px);
+}
+
+.review-movie-poster img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.movie-info {
+  padding: 1rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.movie-info h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.stars {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #ffd700;
+}
+
+.review-text {
+  font-size: 0.9rem;
+  color: #ccc;
+  flex-grow: 1;
+  max-height: 4.5em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.delete-btn {
+  align-self: flex-end;
+  background: transparent;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  font-size: 1.3rem;
+  margin-top: 0.5rem;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.delete-btn:hover {
+  color: #ff0000;
 }
