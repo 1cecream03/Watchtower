@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getMovieDetails } from "../services/movieapi";
 import "../css/MovieDetail.css";
+import Spinner from "../components/Spinner";
 
 function MovieDetail() {
   const { id } = useParams();
@@ -22,7 +23,7 @@ function MovieDetail() {
     fetchDetails();
   }, [id]);
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <Spinner />;
   if (!movie) return <div className="error-message">Movie not found</div>;
 
   const trailer = movie.videos.results.find(

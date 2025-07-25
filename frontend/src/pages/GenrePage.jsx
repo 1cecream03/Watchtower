@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMoviesByGenre, getGenres } from "../services/movieapi";
 import MovieCard from "../components/MovieCard";
-import "../css/Home.css"; // Reuse Home page styles
+import Spinner from "../components/Spinner";
+import "../css/Home.css"; 
 
 function GenrePage() {
   const { id } = useParams();
@@ -35,7 +36,7 @@ function GenrePage() {
     fetchMoviesAndGenre();
   }, [id]);
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <Spinner />;
 
   return (
     <div className="home">

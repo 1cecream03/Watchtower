@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import { useAuth } from "../contexts/AuthContext";
@@ -22,17 +21,15 @@ function Form({ route, method }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("Logging in with:", username);
+    setErrorMessage("");
 
     try {
       const res = await api.post(route, { username, password });
-      console.log("Login response:", res);
 
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         localStorage.setItem("username", username);
-        console.log("Access token saved:", localStorage.getItem(ACCESS_TOKEN));
 
         login();
         await fetchFavorites();
@@ -68,6 +65,7 @@ function Form({ route, method }) {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
+          required
         />
         <input
           className="form-input"
@@ -75,6 +73,7 @@ function Form({ route, method }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          required
         />
         <button className="form-button" type="submit">
           {name}
@@ -92,20 +91,19 @@ function Form({ route, method }) {
 
         {method === "login" && (
           <p className="form-footer-text">
-            Don't have an account?{" "}
+            Don’t have an account?{" "}
             <Link to="/register" className="form-link">
               Register here
             </Link>
           </p>
         )}
-
-        <div className="spinner-container">
-          <div
-            className="spinner"
-            style={{ visibility: loading ? "visible" : "hidden" }}
-          ></div>
-        </div>
       </form>
+
+      {loading && (
+        <div className="spinner-container">
+          <div className="spinner"></div>
+        </div>
+      )}
     </div>
   );
 }
