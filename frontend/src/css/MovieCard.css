@@ -125,9 +125,9 @@
 
 .login-popup {
   position: fixed;
-  top: 60px; /* adjust if needed to sit nicely below the navbar */
+  top: 60px; 
   right: 20px;
-  background: #1e1e1e; /* dark background */
+  background: #1e1e1e; 
   color: #fff;
   padding: 10px 16px;
   border-radius: 8px;

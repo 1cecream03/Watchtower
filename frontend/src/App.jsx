@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import ReviewPage from "./pages/ReviewPage";
 import ReviewList from "./pages/ReviewList";
 import Recommendation from './pages/Recommender';
+import GenrePage from './pages/GenrePage';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/movie/:id" element={<MovieDetail />} />
             <Route path="/movie/:id/reviews" element={<ReviewPage />} />
             <Route path="/reviews" element={<ReviewList />} />
+            <Route path="/genre/:id" element={<GenrePage />} />
           </Routes>
         </main>
       </MovieProvider>

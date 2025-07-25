@@ -69,11 +69,11 @@ html, body {
 }
 
 .spinner-container {
-  height: 40px; /* same height as spinner */
+  height: 40px; 
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px; /* optional spacing */
+  margin-bottom: 10px;
 }
 
 .spinner {
