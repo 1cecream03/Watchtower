@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import { useAuth } from "../contexts/AuthContext";
 import "../css/MovieCard.css";
@@ -8,6 +8,7 @@ function MovieCard({ movie }) {
   const { isLoggedIn } = useAuth();
   const [isFav, setIsFav] = useState(false);
   const [favoriteId, setFavoriteId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkFavorite = async () => {
@@ -19,6 +20,9 @@ function MovieCard({ movie }) {
         if (found) {
           setIsFav(true);
           setFavoriteId(found.id);
+        } else {
+          setIsFav(false);
+          setFavoriteId(null);
         }
       } catch (err) {
         console.error("Failed to check favorite:", err);
@@ -28,7 +32,10 @@ function MovieCard({ movie }) {
     checkFavorite();
   }, [isLoggedIn, movie.id]);
 
-  const toggleFavorite = async () => {
+  const toggleFavorite = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (!isLoggedIn) {
       alert("Please log in to favorite movies.");
       return;
@@ -56,7 +63,7 @@ function MovieCard({ movie }) {
 
   return (
     <div className="movie-card">
-      <Link to={`/movie/${movie.id}`}>
+      <Link to={`/movie/${movie.id}`} className="movie-poster-link">
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
@@ -70,7 +77,11 @@ function MovieCard({ movie }) {
         <p>{movie.release_date}</p>
 
         <div className="movie-actions">
-          <button className="favorite-btn" onClick={toggleFavorite}>
+          <button
+            className={`favorite-btn${isFav ? " active" : ""}`}
+            onClick={toggleFavorite}
+            aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
+          >
             {isFav ? "❤️" : "🤍"}
           </button>
 
