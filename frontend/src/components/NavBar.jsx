@@ -51,6 +51,9 @@ function NavBar() {
 
         <Link to="/reviews" className="nav-link">Reviews</Link>
         <Link to="/favorites" className="nav-link">Favorites</Link>
+        
+        {/* New recommender button */}
+        <Link to="/recommendations" className="nav-link">Recommender</Link>
 
         {isLoggedIn ? (
           loggingOut ? (

@@ -1,33 +1,49 @@
 .recommender-container {
   max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #fff;
+  margin: 2rem auto;
+  background-color: #1a1a1a;
+  padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  font-family: sans-serif;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-textarea {
+.recommender-form textarea {
   width: 100%;
+  border-radius: 6px;
+  border: none;
+  padding: 1rem;
   font-size: 1rem;
-  padding: 10px;
   resize: vertical;
+  background-color: #2a2a2a;
+  color: white;
 }
 
-button {
-  font-size: 1rem;
+.recommender-form button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  background-color: #4b5bdc;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.response-box {
-  margin-top: 20px;
-  background: #f4f4f4;
-  padding: 15px;
+.recommender-form button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.recommendation-result {
+  margin-top: 2rem;
+  background-color: #333;
+  padding: 1rem;
   border-radius: 6px;
 }
 
-.error {
-  color: red;
-  margin-top: 10px;
+.error-text {
+  color: #ff6b6b;
+  margin-top: 1rem;
 }

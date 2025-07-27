@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from api.views import FavoriteViewSet, ReviewViewSet
+from api.views import FavoriteViewSet, ReviewViewSet, RecommendMovieView
 from django.urls import path, include
 
 router = DefaultRouter()
@@ -8,4 +8,5 @@ router.register(r'reviews', ReviewViewSet, basename='review')
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api/recommend/', RecommendMovieView.as_view(), name='recommend'), 
 ]
