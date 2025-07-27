@@ -61,6 +61,15 @@ function MovieCard({ movie }) {
     }
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
     <div className="movie-card">
       <Link to={`/movie/${movie.id}`} className="movie-poster-link">
@@ -74,7 +83,7 @@ function MovieCard({ movie }) {
         <Link to={`/movie/${movie.id}`} className="movie-title-link">
           <h3>{movie.title}</h3>
         </Link>
-        <p>{movie.release_date}</p>
+        <p>{formatDate(movie.release_date)}</p>
 
         <div className="movie-actions">
           <button

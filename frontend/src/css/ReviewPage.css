@@ -1,23 +1,15 @@
-.review-container {
-  padding: 2rem;
+.reviewpage-container {
   max-width: 600px;
   margin: 0 auto;
-  background-color: #1e1e1e;
-  color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.review-poster {
-  width: 180px;
-  border-radius: 12px;
-  display: block;
-  margin: 0 auto 1rem;
-}
-
-.review-heading {
+  padding: 2rem;
   text-align: center;
-  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.review-movie-poster {
+  width: 200px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
 }
 
 .review-form {
@@ -26,54 +18,46 @@
   gap: 1rem;
 }
 
-.review-textarea {
-  padding: 0.75rem;
+.review-form textarea {
+  padding: 1rem;
   font-size: 1rem;
   border-radius: 8px;
-  border: 1px solid #444;
-  background-color: #2a2a2a;
-  color: #fff;
+  border: none;
   resize: vertical;
 }
 
-.star-rating {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.star {
-  color: #555;
-  transition: color 0.2s;
-}
-
-.star:hover,
-.star:hover ~ .star {
-  color: #888;
-}
-
-.star.filled {
-  color: #ffd700;
-}
-
-.submit-button {
+.review-form button {
   padding: 0.75rem;
-  background-color: #646cff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
   font-size: 1rem;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.3s;
 }
 
-.submit-button:hover {
-  background-color: #4b5bdc;
+.review-form button:hover {
+  background-color: #45a049;
 }
 
 .error-text {
   color: #ff6b6b;
-  text-align: center;
+  font-weight: bold;
+}
+
+.star-rating {
+  font-size: 2rem;
+  color: #999;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.star {
+  margin: 0 0.2rem;
+  transition: color 0.2s;
+}
+
+.star.filled {
+  color: gold;
 }

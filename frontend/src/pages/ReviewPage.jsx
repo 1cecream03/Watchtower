@@ -1,110 +1,127 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import api from "../api";
+import { fetchMovieById } from "../services/movieapi";
 import "../css/ReviewPage.css";
 
 function ReviewPage() {
-  const { id } = useParams();
+  const { id } = useParams(); // movie id
   const navigate = useNavigate();
+  const location = useLocation();
   const { isLoggedIn } = useAuth();
 
+  const [movie, setMovie] = useState(null);
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(5);
   const [error, setError] = useState("");
-  const [movie, setMovie] = useState(null);
+  const [reviewId, setReviewId] = useState(null); // store review id if editing
 
   useEffect(() => {
+    // Load movie data
     const stored = localStorage.getItem(`movie-${id}`);
     if (stored) {
       setMovie(JSON.parse(stored));
+    } else {
+      fetchMovieById(id)
+        .then((data) => setMovie(data))
+        .catch(() => setError("Movie data not found. Please go back and try again."));
     }
-  }, [id]);
+
+    // If editing, load review data from location state
+    if (location.state && location.state.review) {
+      const { review } = location.state;
+      setContent(review.content);
+      setRating(review.rating);
+      setReviewId(review.id);
+    }
+  }, [id, location.state]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!isLoggedIn) {
-      setError("Login required to submit reviews.");
+      setError("You must be logged in to submit a review.");
       return;
     }
 
     if (!movie) {
-      setError("Movie data not found.");
+      setError("Movie information missing.");
       return;
     }
 
     try {
-      await api.post("/api/reviews/", {
-        movie_id: parseInt(id),
-        title: movie.title,
-        poster_path: movie.poster_path,
-        content,
-        rating,
-      });
+      if (reviewId) {
+        // Update existing review with PUT
+        await api.put(`/api/reviews/${reviewId}/`, {
+          movie_id: parseInt(id),
+          title: movie.title,
+          poster_path: movie.poster_path,
+          content,
+          rating,
+        });
+      } else {
+        // Create new review with POST
+        await api.post("/api/reviews/", {
+          movie_id: parseInt(id),
+          title: movie.title,
+          poster_path: movie.poster_path,
+          content,
+          rating,
+        });
+      }
 
-      setContent("");
-      setRating(5);
-      setError("");
       navigate("/reviews");
     } catch (err) {
       console.error("Submit error:", err.response?.data || err);
-      setError("An error occurred. Try again.");
+      setError("Something went wrong. Please try again.");
     }
   };
 
-  const handleStarClick = (index) => {
-    setRating(index + 1);
-  };
-
-  if (!movie) {
+  if (error) {
     return (
-      <div className="review-container">
-        <p className="error-text">Movie data not found. Please go back and try again.</p>
+      <div className="reviewpage-container">
+        <p className="error-text">{error}</p>
       </div>
     );
   }
 
   return (
-    <div className="review-container">
-      {movie.poster_path && (
+    <div className="reviewpage-container">
+      {movie?.poster_path && (
         <img
+          className="review-movie-poster"
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
-          className="review-poster"
         />
       )}
-
-      <h2 className="review-heading">
-        Write a Review for <em>{movie.title}</em>
+      <h2>
+        {reviewId ? "Edit Review for" : "Write a Review for"} <em>{movie?.title}</em>
       </h2>
 
-      <form onSubmit={handleSubmit} className="review-form">
+      <form className="review-form" onSubmit={handleSubmit}>
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Write your review..."
-          rows="5"
+          rows="4"
           required
-          className="review-textarea"
         />
 
         <div className="star-rating">
-          {[...Array(5)].map((_, index) => (
+          {[1, 2, 3, 4, 5].map((star) => (
             <span
-              key={index}
-              className={`star ${index < rating ? "filled" : ""}`}
-              onClick={() => handleStarClick(index)}
+              key={star}
+              className={star <= rating ? "star filled" : "star"}
+              onClick={() => setRating(star)}
+              style={{ cursor: "pointer" }}
             >
               ★
             </span>
           ))}
         </div>
 
-        <button type="submit" className="submit-button">
-          Submit Review
-        </button>
-
+        <button type="submit">{reviewId ? "Update Review" : "Submit Review"}</button>
         {error && <p className="error-text">{error}</p>}
       </form>
     </div>

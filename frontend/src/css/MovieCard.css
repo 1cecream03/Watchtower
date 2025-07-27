@@ -133,7 +133,8 @@
 }
 
 .review-button {
-  margin-top: auto;
+  display: block;          
+  margin: 0 auto;          
   padding: 0.4rem 0.75rem;
   background-color: transparent;
   color: white;
@@ -141,16 +142,11 @@
   border-radius: 4px;
   font-size: 0.85rem;
   transition: background-color 0.2s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-self: center; /* <-- This is key for flexbox children */
+  cursor: pointer;
+  text-align: center;      
 }
 
 .review-button:hover {
   background-color: #4b5bdc;
 }
 
-.review-button:hover {
-  background-color: #4b5bdc;
-}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 import { useAuth } from "../contexts/AuthContext";
 import "../css/ReviewList.css";
@@ -6,6 +7,7 @@ import "../css/ReviewList.css";
 function ReviewList() {
   const [reviews, setReviews] = useState([]);
   const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -34,6 +36,11 @@ function ReviewList() {
     }
   };
 
+  const handleEdit = (review) => {
+    // Navigate to the review page with movie id and pass the review in state for editing
+    navigate(`/movie/${review.movie_id}/reviews`, { state: { review } });
+  };
+
   return (
     <div className="reviewlist-page">
       <h2>Your Reviews</h2>
@@ -51,12 +58,17 @@ function ReviewList() {
               <h3>{review.title}</h3>
               <div className="stars">{"⭐".repeat(review.rating)}</div>
               <p className="review-text">{review.content}</p>
-              <button
-                className="delete-btn"
-                onClick={() => handleDelete(review.id)}
-              >
-                🗑️
-              </button>
+              <div className="review-actions">
+                <button className="edit-btn" onClick={() => handleEdit(review)}>
+                  ✏️
+                </button>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(review.id)}
+                >
+                  🗑️
+                </button>
+              </div>
             </div>
           </div>
         ))}

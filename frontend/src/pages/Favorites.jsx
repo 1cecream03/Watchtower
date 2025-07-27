@@ -49,7 +49,6 @@ function Favorites() {
             </div>
             <div className="movie-info">
               <h3>{fav.title}</h3>
-              <p>Release Date: {fav.release_date}</p>
               <button
                 className="delete-btn"
                 onClick={() => handleDelete(fav.id)}

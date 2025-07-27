@@ -39,3 +39,14 @@ export const getMoviesByGenre = async (genreId, page = 1) => {
   return data.results;
 };
 
+export const fetchMovieById = async (id) => {
+  try {
+    const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
+    if (!res.ok) throw new Error("Movie not found.");
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error("TMDB fetch error:", err);
+    throw err;
+  }
+};
