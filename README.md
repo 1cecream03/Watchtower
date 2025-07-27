@@ -4,7 +4,7 @@ Link to Watchtower:
 
 https://f9426dd6-9ad0-43fd-b20a-9ca0f430c2de.e1-us-east-azure.choreoapps.dev
 
-Note: The database needs to be switched on every hour. Please refer to the README document for full details on features that require database access.
+Note: The database needs to be switched on every hour. Please refer to the README document for full details on features that require database access assuming its switched off.
 
 
 
