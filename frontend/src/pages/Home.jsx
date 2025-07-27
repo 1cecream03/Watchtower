@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import { searchMovies, getPopularMovies } from "../services/movieapi";
 import "../css/Home.css";
@@ -12,7 +12,17 @@ function Home() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
+  // 🔍 Triggered when visiting with a recommendation
+  useEffect(() => {
+    if (location.state?.search) {
+      handleAutoSearch(location.state.search);
+      window.history.replaceState({}, document.title); // Clear state
+    }
+  }, [location.state]);
+
+  // 🔍 Regular popular movies on initial load
   useEffect(() => {
     loadPopularMovies(page);
   }, [page]);
@@ -55,6 +65,22 @@ function Home() {
       setLoading(false);
     }
     setSearchQuery("");
+  };
+
+  // ✅ Used by Recommender redirect
+  const handleAutoSearch = async (query) => {
+    setLoading(true);
+    try {
+      const results = await searchMovies(query);
+      setMovies(results);
+      setError(null);
+      setHasMore(false);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load recommended movie.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
