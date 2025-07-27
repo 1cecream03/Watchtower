@@ -7,17 +7,21 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : apiUrl,
 });
 
+const publicRoutes = ["/api/user/register/", "/api/token/"];
+
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem(ACCESS_TOKEN);
-    if (token) {
+
+    const isPublic = publicRoutes.some((route) => config.url.includes(route));
+
+    if (token && !isPublic) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export default api;
