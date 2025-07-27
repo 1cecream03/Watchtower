@@ -6,7 +6,7 @@
 }
 
 .reviewlist-page h2 {
-  margin-bottom: 2rem; /* Increased spacing from header to cards */
+  margin-bottom: 2rem; 
   color: #fff;
 }
 
@@ -14,7 +14,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2rem; /* Increased spacing between cards */
+  gap: 2rem; 
 }
 
 .review-card {

@@ -67,7 +67,6 @@ function Home() {
     setSearchQuery("");
   };
 
-  // ✅ Used by Recommender redirect
   const handleAutoSearch = async (query) => {
     setLoading(true);
     try {

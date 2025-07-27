@@ -6,7 +6,7 @@ import { fetchMovieById } from "../services/movieapi";
 import "../css/ReviewPage.css";
 
 function ReviewPage() {
-  const { id } = useParams(); // movie id
+  const { id } = useParams(); 
   const navigate = useNavigate();
   const location = useLocation();
   const { isLoggedIn } = useAuth();
@@ -15,10 +15,10 @@ function ReviewPage() {
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(5);
   const [error, setError] = useState("");
-  const [reviewId, setReviewId] = useState(null); // store review id if editing
+  const [reviewId, setReviewId] = useState(null); 
 
   useEffect(() => {
-    // Load movie data
+
     const stored = localStorage.getItem(`movie-${id}`);
     if (stored) {
       setMovie(JSON.parse(stored));

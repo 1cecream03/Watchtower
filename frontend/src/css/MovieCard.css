@@ -87,7 +87,6 @@
   font-size: 0.9rem;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
   .favorite-btn {
     width: 32px;

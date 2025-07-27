@@ -1,12 +1,12 @@
 export async function getMovieRecommendation(prompt) {
-  console.log("Sending request with:", { prompt }); // Updated debug log
+  console.log("Sending request with:", { prompt }); 
   
   const response = await fetch("http://localhost:8000/api/recommend/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ prompt }), // Changed from 'description' to 'prompt'
+    body: JSON.stringify({ prompt }), 
   });
 
   console.log("Response status:", response.status);
@@ -19,5 +19,5 @@ export async function getMovieRecommendation(prompt) {
 
   const data = await response.json();
   console.log("Received data:", data);
-  return data; // This will be { recommendation: "movie title" }
+  return data; 
 }

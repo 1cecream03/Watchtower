@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 import { useAuth } from "../contexts/AuthContext";
-import "../css/ReviewList.css"; // reuse the same styling
+import "../css/ReviewList.css"; 
 
 function Favorites() {
   const [favorites, setFavorites] = useState([]);
