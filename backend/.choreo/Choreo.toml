@@ -1,0 +1,10 @@
+[project]
+org = "watchtower"
+name = "django-backend"
+
+[build]
+buildCommand = "pip install -r requirements.txt"
+runCommand = "python manage.py runserver 0.0.0.0:8000"
+
+[deploy]
+port = 8000
