@@ -45,8 +45,16 @@ python manage.py migrate
 
 6) Run the backend server:
    
-run: python manage.py runserver
+run: python manage.py runserver (http://localhost:8000/)
 
 7) On a seperate terminal, navigate to frontend folder
 
-run cd frontend
+run: cd frontend
+
+8) Install frontend dependencies
+
+run: npm install
+
+9) Run frontend server (http://localhost:5173) 
+
+run: npm rundev
