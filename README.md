@@ -20,8 +20,9 @@ Note: If you're using PowerShell and encounter an error, switch your terminal to
    
 run: cd backend
 
-4) Create and edit .env file.
-run cp .env.example .env
+4) Create and edit .env file under the backend folder.
+
+run: cp .env.example .env
 
 Open .env and update SECRET_KEY and OPEN_API_KEY
 
