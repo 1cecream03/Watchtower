@@ -38,7 +38,7 @@ run: pip install -r requirements.txt
 
 Note: Make sure your virtual environment is activated before installing.
 
-77) Apply database migrations
+7) Apply database migrations
 
 python manage.py migrate
 
