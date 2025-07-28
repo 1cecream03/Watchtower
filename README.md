@@ -57,4 +57,4 @@ run: npm install
 
 11) Run frontend server (http://localhost:5173) 
 
-run: npm rundev
+run: npm run dev
