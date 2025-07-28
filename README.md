@@ -28,7 +28,7 @@ run: cp .env.example .env
 
 To generate SECRET_KEY, 
 
-run python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+run: python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 
 To generate OPENAI_API_KEY, add your own OpenAI API key (get it from https://platform.openai.com/account/api-keys)
 
