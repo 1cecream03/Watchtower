@@ -48,10 +48,9 @@ function NavBar() {
             ))}
           </div>
         </div>
-
-        <Link to="/reviews" className="nav-link">Reviews</Link>
-        <Link to="/favorites" className="nav-link">Favorites</Link>
         <Link to="/recommendations" className="nav-link">Recommender</Link>
+        <Link to="/favorites" className="nav-link">Favorites</Link>
+        <Link to="/reviews" className="nav-link">Reviews</Link>
 
         {isLoggedIn ? (
           loggingOut ? (
